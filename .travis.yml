@@ -3,8 +3,8 @@ language:
   -cpp
 
 os:
+  - windows
   - linux
-  - osx
 
 compiler:
   - gcc
