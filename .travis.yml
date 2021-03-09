@@ -1,0 +1,32 @@
+language: 
+  -c
+  -cpp
+
+os:
+  - linux
+  - osx
+
+compiler:
+  - gcc
+  - clang
+
+addons:
+  apt:
+    packages:
+#      - libboost-test-dev
+
+script:
+  - cmake .
+  - cmake --build .
+  - cmake --build . --target test
+  - cmake --build . --target package
+
+before_deploy:
+  - sed -i "s/__VERSION__/$TRAVIS_BUILD_NUMBER/g" bintray-descriptor.json
+
+deploy:
+  skip_cleanup: true
+  provider: bintray
+  file: bintray-descriptor.json
+  user: $BINTRAY_USER
+  key: $BINTRAY_API_KEY
