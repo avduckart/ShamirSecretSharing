@@ -1,19 +1,11 @@
-language: 
-  -c
-  -cpp
-
-os:
-  - windows
-  - linux
-
-compiler:
-  - gcc
-  - clang
+dist: xenial
+language: cpp
+compiler: gcc
 
 addons:
   apt:
     packages:
-#      - libboost-test-dev
+      - libssl-dev
 
 script:
   - cmake .
