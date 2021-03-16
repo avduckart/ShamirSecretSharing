@@ -10,12 +10,6 @@ if (USE_STATIC_RUNTIME_LINKAGE_FOR_WIN)
 else()
 	set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 endif()
-
-set_target_properties(shamir_test
-	PROPERTIES
-	CXX_STANDARD 17
-	CXX_STANDARD_REQUIRED ON
-	RUNTIME_OUTPUT_DIRECTORY ${BUILD_DIR})
 	
 add_subdirectory(${GTEST_ROOT})
 
@@ -23,6 +17,12 @@ set(GTEST_HEADERS ${GTEST_ROOT}/include)
 set(GTEST_LIBRARIES gtest gtest_main)
 
 add_executable(shamir_test main.cpp)
+
+set_target_properties(shamir_test
+	PROPERTIES
+	CXX_STANDARD 17
+	CXX_STANDARD_REQUIRED ON
+	RUNTIME_OUTPUT_DIRECTORY ${BUILD_DIR})
 
 target_link_libraries(shamir_test PRIVATE 
 	${GTEST_LIBRARIES}  
