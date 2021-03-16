@@ -12,7 +12,7 @@
     #define mutex_t HANDLE
     #define mutex_init(mtx) mtx = CreateMutex(NULL, FALSE, NULL); if (!mtx) return MUTEX_ERROR
     #define mutex_destroy(mtx) CloseHandle(mtx);
-    #define mutex_lock(mutex) WaitForSingleObject(mutex, INFINITE) // TODO обработать
+    #define mutex_lock(mutex) WaitForSingleObject(mutex, INFINITE) // TODO Г®ГЎД‘Е•ГЎГ®Е€Е•Е€Гј
     #define mutex_unlock(mutex) ReleaseMutex(mutex)
 #elif defined __linux__ 
     #include <pthread.h>
@@ -32,7 +32,7 @@
     }
 
     #include <asm/errno.h>
-    #define create_thread(thread, func, data) pthread_create(thread, NULL, func, &data)
+    #define create_thread(thread, func, data) pthread_create(thread, NULL, func, data)
     #define join(threads) unix_join(threads)
     #define close_thread(thread) pthread_cancel(&thread)
     #define mutex_t pthread_mutex_t
