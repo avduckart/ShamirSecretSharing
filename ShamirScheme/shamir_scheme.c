@@ -19,7 +19,7 @@ void zero_part(part_t*);
 void zero_parts(part_t*);
 int is_ready_to_write_parts(part_t*);
 void close_threads(thread_t*);
-int handler(uint32_t);
+int handler(int);
 
 int construct_polynom(polynom_t* pol, const BIGNUM* mod)
 {
@@ -206,7 +206,7 @@ void close_threads(thread_t* threads)
             close_thread(threads[i]);
 }
 
-int handler(uint32_t cause)
+int handler(int cause)
 {
     int ret = SUCCESS;
     switch (cause) {
