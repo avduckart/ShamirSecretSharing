@@ -15,39 +15,4 @@ cmake_host_system_information(
 )
 
 hunter_add_package(GTest)
-hunter_add_package(gumbo)
 hunter_add_package(OpenSSL)
-hunter_add_package(rocksdb)
-hunter_add_package(Async++)
-hunter_add_package(
-  Boost
-  COMPONENTS
-  atomic
-  chrono
-  # context
-  # contract
-  # coroutine
-  # date_time
-  exception
-  # fiber
-  filesystem
-  # graph
-  # graph_parallel
-  # iostreams
-  # locale
-  log
-  math
-  # mpi
-  program_options
-  # python
-  random
-  regex
-  serialization
-  # signals
-  # stacktrace
-  system
-  # test
-  thread
-  # timer
-  # wave
-)
