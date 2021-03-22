@@ -24,10 +24,7 @@ before_script:
 jobs:
   include: 
     script:
-      - cmake .
-      - cmake --build .
-      - cmake --build . --target test
-      - cmake --build . --target package
+      - docker run -t -v $(pwd):/var/builder/ -w /var/builder --entrypoint ./scripts.sh $DOCKER_IMAGE
 
 before_deploy:
   - sed -i "s/__VERSION__/$TRAVIS_BUILD_NUMBER/g" bintray-descriptor.json
