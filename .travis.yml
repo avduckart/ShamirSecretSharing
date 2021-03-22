@@ -1,17 +1,33 @@
-dist: xenial
-language: cpp
-compiler: g++
+os: linux             # ОС
+sudo: required        # Необходимость прав sudo
+language: "minimal"   # Языковой шаблон
+services:
+  - docker            # Необходимые сервисы
+env:
+  # Based on Alpine 3.10
+  # GCC 8.3
+  # CMake 3.14
+  # gcovr
+  # jscpd
+  # valgrind
+  # Hunter GTest v1.8.0 (cached)
+  # Hunter Boost cached components: exception
+  #                                 filesystem
+  #                                 log
+  #                                 regex
+  #                                 system
+ - DOCKER_IMAGE="toliak/bootstrap-cpp"             # Для использования снять комментарий
 
-addons:
-  apt:
-    packages:
-      - libssl-dev
+before_script:
+  - docker pull $DOCKER_IMAGE                       # Предварительное скачивание образа
 
-script:
-  - cmake .
-  - cmake --build .
-  - cmake --build . --target test
-  - cmake --build . --target package
+jobs:
+  include: 
+    script:
+      - cmake .
+      - cmake --build .
+      - cmake --build . --target test
+      - cmake --build . --target package
 
 before_deploy:
   - sed -i "s/__VERSION__/$TRAVIS_BUILD_NUMBER/g" bintray-descriptor.json
