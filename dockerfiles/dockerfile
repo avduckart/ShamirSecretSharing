@@ -14,8 +14,6 @@ RUN apk update && \
             make \
             cmake \
             gcovr \
-            py-setuptools \
-            npm \
             valgrind \
             perl \
             bash \
