@@ -16,7 +16,7 @@ env:
   #                                 log
   #                                 regex
   #                                 system
- - DOCKER_IMAGE="toliak/bootstrap-cpp"             # Для использования снять комментарий
+ - DOCKER_IMAGE=./dockerfiles/Dockerfile             # Для использования снять комментарий
  - PATH=/bin/bash:$PATH
 
 before_script:
@@ -26,8 +26,8 @@ jobs:
   include: 
     script:
       - docker build --tag=image -f ./dockerfiles/Dockerfile ./dockerfiles
-      - docker run -t -v $(pwd):/var/builder/ -w /var/builder --entrypoint script.sh $DOCKER_IMAGE
-      - docker rm -fv ubuntu19_ctr_x32
+      - docker run --name=image ${PWD}:/project_dir image bash script.sh
+      - docker rm -fv Dockerfile
 
 before_deploy:
   - sed -i "s/__VERSION__/$TRAVIS_BUILD_NUMBER/g" bintray-descriptor.json
