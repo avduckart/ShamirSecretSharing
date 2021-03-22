@@ -24,7 +24,7 @@ before_script:
 jobs:
   include: 
     script:
-      - docker run -t -v $(pwd):/var/builder/ -w /var/builder --entrypoint ./scripts.sh $DOCKER_IMAGE
+      - docker run -t -v $(pwd):/var/builder/ -w /var/builder --entrypoint ./script.sh $DOCKER_IMAGE
 
 before_deploy:
   - sed -i "s/__VERSION__/$TRAVIS_BUILD_NUMBER/g" bintray-descriptor.json
