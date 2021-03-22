@@ -20,7 +20,7 @@ env:
  - PATH=/bin/bash:$PATH
 
 before_script:
-  - docker pull $DOCKER_IMAGE                       # Предварительное скачивание образа
+#  - docker pull $DOCKER_IMAGE                       # Предварительное скачивание образа
 
 jobs:
   include: 
