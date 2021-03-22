@@ -16,7 +16,7 @@ env:
   #                                 log
   #                                 regex
   #                                 system
- - DOCKER_IMAGE=./dockerfiles/Dockerfile             # Для использования снять комментарий
+ - DOCKER_IMAGE=./dockerfiles/dockerfile             # Для использования снять комментарий
  - PATH=/bin/bash:$PATH
 
 before_script:
