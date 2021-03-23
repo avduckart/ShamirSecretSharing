@@ -2,20 +2,31 @@ cmake_minimum_required(VERSION 3.12)
 
 project(shamir_test)
 
-#Setup gtest
-set(GTEST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/gtest/googletest)
+if (WIN32)
 
-if (USE_STATIC_RUNTIME_LINKAGE_FOR_WIN)
-	set(gtest_force_shared_crt OFF CACHE BOOL "" FORCE)
-else()
-	set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+	set(MSVC_LINKAGE MD)
+
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /bigobj /${MSVC_LINKAGE}d")
+	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /O2 /${MSVC_LINKAGE}d")
+	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O2 /${MSVC_LINKAGE}")
+	set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /bigobj /${MSVC_LINKAGE}d")
+	set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} /O2 /${MSVC_LINKAGE}d")
+	set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /O2 /${MSVC_LINKAGE}")
 endif()
+
+hunter_add_package(GTest)
+
+find_package(GTest CONFIG REQUIRED)
+if (NOT GTest_FOUND)
+	message(FATAL_ERROR "GTest libraries not found! CMake will stop." )
+else()
+	set(GTEST_LIBRARIES GTest::gtest_main GTest::gtest)
+	set(GTEST_INCLUDE_DIR ${GTEST_ROOT}/include)
+	message("Found GTest libraries: ${GTEST_LIBRARIES} " )
+	message("Found GTest includes: ${GTEST_INCLUDE_DIR}" )
+endif()
+
 	
-add_subdirectory(${GTEST_ROOT})
-
-set(GTEST_HEADERS ${GTEST_ROOT}/include)
-set(GTEST_LIBRARIES gtest gtest_main)
-
 add_executable(shamir_test main.cpp)
 
 set_target_properties(shamir_test
@@ -25,14 +36,12 @@ set_target_properties(shamir_test
 	RUNTIME_OUTPUT_DIRECTORY ${BUILD_DIR})
 
 target_link_libraries(shamir_test PRIVATE 
-	${GTEST_LIBRARIES}  
+	${GTEST_LIBRARIES} 
 	${OPENSSL_CRYPTO_LIBRARIES} 
 	${CMAKE_DL_LIBS}
-	${ProjectName})
+	${ProjectName}
+)
 
 target_include_directories(shamir_test PUBLIC 
 	${OPENSSL_INCLUDE_DIR}
-	${GTEST_HEADERS})
-
-enable_testing()
-add_test(test shamir_test)
+	${GTEST_INCLUDE_DIR})
