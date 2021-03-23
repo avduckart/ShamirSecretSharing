@@ -51,7 +51,7 @@ add_subdirectory(testing)
 
 #tests
 enable_testing()
-add_test (test build/Release/shamir_test)
+add_test (test ${BUILD_DIR}/shamir_test)
 
 #CPack
 set(CPACK_GENERATOR DEB)
