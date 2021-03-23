@@ -47,7 +47,7 @@ else()
 endif()
 
 add_subdirectory(ShamirScheme)
-#add_subdirectory(testing)
+add_subdirectory(testing)
 
 #tests
 #enable_testing()
