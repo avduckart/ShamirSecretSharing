@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 # Project name
-set(ProjectName shamir_scheme)
+set(ProjectName shamir)
 project(${ProjectName})
 
 set(BUILD_SUB_DIR $<IF:$<CONFIG:Debug>,Debug,Release>) 
@@ -27,16 +27,14 @@ if (WIN32)
 	set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /O2 /${MSVC_LINKAGE}")
 endif()
 
-if (WIN32)
-	find_package(OPENSSL) 
-	if (NOT OPENSSL_FOUND)
-		message(FATAL_ERROR "OpenSSL not found! CMake will stop." )
-	endif()
+find_package(OpenSSL REQUIRED)
+if (NOT OpenSSL_FOUND)
+	message(FATAL_ERROR "OpenSSL libraries not found! CMake will stop." )
+else()
+	set(OPENSSL_CRYPTO_LIBRARIES OpenSSL::Crypto)
+	set(OPENSSL_INCLUDE_DIR ${OPENSSL_ROOT}/include)
 	message("Found OpenSSL libraries: ${OPENSSL_CRYPTO_LIBRARIES} " )
 	message("Found OpenSSL includes: ${OPENSSL_INCLUDE_DIR}" )
-else()
-	set(OPENSSL_CRYPTO_LIBRARIES shamir_scheme)
-	set(OPENSSL_INCLUDE_DIR "/usr/include/openssl")
 endif()
 
 add_subdirectory(ShamirScheme)
@@ -53,4 +51,4 @@ include(CPack)
 
 #tests
 enable_testing()
-add_test (shamir_test shamir_test)
+add_test (test shamir_test)
