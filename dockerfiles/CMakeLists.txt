@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.4)
 
-include("gate/cmake/HunterGate.cmake")
-
 include("cmake/HunterGate.cmake")
 HunterGate(
     URL "https://github.com/cpp-pm/hunter/archive/v0.23.224.tar.gz"
