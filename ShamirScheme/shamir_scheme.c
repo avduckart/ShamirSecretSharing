@@ -262,5 +262,5 @@ void run_calc(thread_t* threads, const share_data_t* data)
     void(*calc[])(share_data_t*) = { calc_a0, calc_a1, calc_a2 };
 
     for (int i = 0; i < _K; i++)
-        create_thread(&threads[i], (void* (*)(void*)) calc[i], data);
+        create_thread(&threads[i], (void* (*)(void*)) calc[i], (share_data_t*)data);
 }
