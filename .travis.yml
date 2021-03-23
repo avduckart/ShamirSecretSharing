@@ -26,7 +26,7 @@ jobs:
   include: 
     script:
       - docker build --tag=image -f ./dockerfiles/dockerfile ./dockerfiles
-      - docker run --name=container -v ${PWD}:/project_dir image bash script.sh
+      - docker run --name=container -v ${PWD}:/project_dir image ./bash script.sh
       - docker rm -fv container
 
 before_deploy:
