@@ -17,7 +17,7 @@ env:
   #                                 regex
   #                                 system
  - DOCKER_IMAGE=./dockerfiles/dockerfile             # Для использования снять комментарий
- - PATH=/bin/bash:$PATH
+ - TRAVIS_BUILD_NUMBER=1
 
 before_script:
 #  - docker pull $DOCKER_IMAGE                       # Предварительное скачивание образа
