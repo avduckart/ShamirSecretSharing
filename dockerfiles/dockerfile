@@ -13,16 +13,7 @@ RUN apk update && \
             valgrind \
             perl \
             bash \
-            clang \
-            && \
-    mkdir -p /tmp/hunter-preload && \
-    cd /tmp/hunter-preload && \
-    git clone https://github.com/hunter-packages/gate.git gate && \
-    cmake -H. -B.build && \
-    cd / && \
-    rm -rf /tmp/hunter-preload && \
-    rm -rf ${HOME}/.cache && \
-    rm -rf /var/cache/apk/*
+            clang 
     
 #Set working directory to mounted project directory
 RUN mkdir /project_dir
