@@ -20,9 +20,6 @@
     #define DLLEXPORT 
 #endif
 
-#include <openssl/rand.h>
-#include <openssl/bn.h>
-
 #include "shamir_types.h"
 
 #ifdef __cplusplus
