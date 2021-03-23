@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 3.12)
 
+### Hunter snapshot that will be used ###
+include("cmake/HunterGate.cmake")
+HunterGate(
+    URL "https://github.com/cpp-pm/hunter/archive/v0.23.224.tar.gz"
+    SHA1 "18e57a43efc435f2e1dae1291e82e42afbf940be"
+)
+
 # Project name
 set(ProjectName shamir)
 project(${ProjectName})
@@ -27,7 +34,7 @@ if (WIN32)
 	set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /O2 /${MSVC_LINKAGE}")
 endif()
 
-#hunter_add_package(OpenSSL)
+hunter_add_package(OpenSSL)
 
 find_package(OpenSSL REQUIRED)
 if (NOT OpenSSL_FOUND)
