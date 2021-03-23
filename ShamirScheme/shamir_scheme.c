@@ -57,7 +57,7 @@ int share_secret(part_t* parts, const polynom_t* pol, const BIGNUM* mod)
     mutex_t mtx;
     mutex_init(mtx);
     thread_t threads[_K];
-    share_data_t data = { parts, pol, mod, 0, mtx };
+    share_data_t data = { parts, pol, (BIGNUM*)mod, 0, mtx };
     run_calc(threads, &data);
 
     int ret = handler(join(threads));
