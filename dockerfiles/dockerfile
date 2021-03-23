@@ -19,7 +19,6 @@ RUN apk update && \
             bash \
             clang \
             && \
-    npm install -g jscpd && \
     mkdir -p /tmp/hunter-preload && \
     cd /tmp/hunter-preload && \
     git clone https://github.com/hunter-packages/gate.git gate && \
