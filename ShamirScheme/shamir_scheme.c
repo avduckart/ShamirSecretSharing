@@ -82,9 +82,9 @@ int restore_secret(BIGNUM* secret, const part_t* part1, const part_t* part2, con
     int success = 0;
     thread_t threads[_K];
     restore_data_t data[_K] = {
-        {secret, {part1, part2, part3}, mod, 0, mtx},
-        {secret, {part2, part1, part3}, mod, 0, mtx},
-        {secret, {part3, part2, part1}, mod, 0, mtx}
+        {secret, {part1, part2, part3}, (BIGNUM*)mod, 0, mtx},
+        {secret, {part2, part1, part3}, (BIGNUM*)mod, 0, mtx},
+        {secret, {part3, part2, part1}, (BIGNUM*)mod, 0, mtx}
     };
 
     for (int i = 0; i < _K; i++) {
