@@ -14,7 +14,7 @@ if (WIN32)
 	set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /O2 /${MSVC_LINKAGE}")
 endif()
 
-hunter_add_package(GTest)
+#hunter_add_package(GTest)
 
 find_package(GTest CONFIG REQUIRED)
 if (NOT GTest_FOUND)
