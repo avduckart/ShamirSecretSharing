@@ -10,10 +10,10 @@ jobs:
       - docker build --tag=image -f ./dockerfiles/dockerfile ./dockerfiles
       - docker run --name=container -v ${PWD}:/project_dir image bash ./script.sh
       - docker rm -fv container
+      - valgrind --tool=memcheck build/Release/shamir_test
 
 before_deploy:
   - sed -i "s/__VERSION__/$TRAVIS_BUILD_NUMBER/g" bintray-descriptor.json
-  - valgrind --tool=memcheck build/Release/shamir_test 
 
 deploy:
   skip_cleanup: true
