@@ -28,5 +28,6 @@ RUN apk update && \
     rm -rf ${HOME}/.cache && \
     rm -rf /var/cache/apk/*
     
-VOLUME /opt/builder
-WORKDIR /opt/builder
+#Set working directory to mounted project directory
+RUN mkdir /project_dir
+WORKDIR /project_dir
