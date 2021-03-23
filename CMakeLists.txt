@@ -9,7 +9,7 @@ HunterGate(
 
 # Project name
 set(ProjectName shamir)
-project(${ProjectName} VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
+project(${ProjectName} VERSION 0.0.1)
 
 set(BUILD_SUB_DIR $<IF:$<CONFIG:Debug>,Debug,Release>) 
 set(BUILD_DIR 
