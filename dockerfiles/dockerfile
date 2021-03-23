@@ -27,6 +27,9 @@ RUN apk update && \
     rm -rf /tmp/hunter-preload && \
     rm -rf ${HOME}/.cache && \
     rm -rf /var/cache/apk/*
+    
+COPY script.sh /
+ENTRYPOINT ["bash","script.sh"]
 
 VOLUME /opt/builder
 WORKDIR /opt/builder
