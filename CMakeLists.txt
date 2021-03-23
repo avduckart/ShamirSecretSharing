@@ -27,6 +27,8 @@ if (WIN32)
 	set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /O2 /${MSVC_LINKAGE}")
 endif()
 
+hunter_add_package(OpenSSL)
+
 find_package(OpenSSL REQUIRED)
 if (NOT OpenSSL_FOUND)
 	message(FATAL_ERROR "OpenSSL libraries not found! CMake will stop." )
