@@ -34,7 +34,7 @@
     #include <asm/errno.h>
     #define create_thread(thread, func, data) pthread_create(thread, NULL, func, data)
     #define join(threads) unix_join(threads)
-    #define close_thread(thread) pthread_cancel(&thread)
+    #define close_thread(thread) pthread_cancel(thread)
     #define mutex_t pthread_mutex_t
     #define mutex_init(mtx) pthread_mutex_init(&mtx, NULL);
     #define mutex_destroy(mtx) pthread_mutex_destroy(&mtx);
