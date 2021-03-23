@@ -11,7 +11,7 @@ set_target_properties(${ProjectName}
 target_link_libraries(${ProjectName} 
     ${OPENSSL_CRYPTO_LIBRARIES} 
     ${CMAKE_DL_LIBS}
-)
+) 
 
 target_include_directories(${ProjectName} PUBLIC
     ${OPENSSL_INCLUDE_DIR})
