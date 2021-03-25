@@ -6,7 +6,7 @@
 #include "types.h"
 
 #define secure_alloc(type, var, func)   type * var = func(); if(!var) { data->success = 0xF0; return;}
-#define secure_free(func, var)          if(!var) func(var);
+#define secure_free(func, var)          if(var) func(var);
 #define check(cond, status)             if(cond) return status;
 #define is_null(ptr, status)            check(!ptr, status);
 
