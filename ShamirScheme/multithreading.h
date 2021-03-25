@@ -20,13 +20,9 @@
 
     int unix_join(thread_t* threads)
     {
-        int status = MODULE_IS_NULL;
+        int status = 0;
         for (int i = 0; i < _K; i++)
-        {
-            status = pthread_join(threads[i], NULL);
-            if (status != SUCCESS)
-                break;
-        }
+            status += pthread_join(threads[i], NULL);
 
         return status;
     }
