@@ -88,7 +88,7 @@ int restore_secret(BIGNUM* secret, const part_t* part1, const part_t* part2, con
     };
 
     for (int i = 0; i < _K; i++) {
-        create_thread(threads[i], (void* (*)(void*)) calc_term, &data[i]);
+        create_thread(&threads[i], (void* (*)(void*)) calc_term, &data[i]);
         success |= data[i].success;
     }
 
