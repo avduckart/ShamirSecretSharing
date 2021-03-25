@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdio.h>
 
 #include "../shamir_scheme.h"
 #include "../errors.h"
@@ -82,9 +83,9 @@ int restore_secret(BIGNUM* secret, const part_t* part1, const part_t* part2, con
     int success = 0;
     thread_t threads[_K];
     restore_data_t data[_K] = {
-        {secret, {part1, part2, part3}, (BIGNUM*)mod, 0, mtx},
-        {secret, {part2, part1, part3}, (BIGNUM*)mod, 0, mtx},
-        {secret, {part3, part2, part1}, (BIGNUM*)mod, 0, mtx}
+        {secret, {part1, part2, part3}, (BIGNUM*)mod, 0, &mtx},
+        {secret, {part2, part1, part3}, (BIGNUM*)mod, 0, &mtx},
+        {secret, {part3, part2, part1}, (BIGNUM*)mod, 0, &mtx}
     };
 
     for (int i = 0; i < _K; i++) {
@@ -123,7 +124,7 @@ void calc_term(restore_data_t* data)
      
     BN_mod_mul(term, term, data->part[0]->shadow, data->mod, ctx);
 
-    syncronized(data->mtx, 
+    syncronized(*data->mtx,
         BN_mod_add(data->secret, data->secret, term, data->mod, ctx));
 
     secure_free(BN_clear_free, term);
