@@ -20,9 +20,9 @@ typedef struct {
     const part_t* part[_K];
     BIGNUM* mod;
     int success;
-    mutex_t mtx;
+    mutex_t* mtx;
 }restore_data_t;
 
 typedef void(*proc_t)(void*);
 
-#endif //__TYPES_H__
+#endif //__TYPES_H__ 
