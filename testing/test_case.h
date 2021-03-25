@@ -4,7 +4,6 @@
 #include "../shamir_scheme.h"
 #include "../errors.h"
 
-/*
 TEST(TestCase, etalon_value_test)
 {
     BIGNUM* mod = BN_new(); BN_set_word(mod, 13);
@@ -62,6 +61,8 @@ TEST(TestCase, etalon_value_test)
             }
         }
     }
+    
+    BN_free(secret);
 
     for (int i = 0; i < _N; i++)
     {
@@ -77,7 +78,7 @@ TEST(TestCase, etalon_value_test)
     BN_free(a2);
     BN_free(mod);
 };
-*/
+
 
 TEST(TestCase, construct_polynom_test) {
     const BIGNUM* mod = BN_get0_nist_prime_256();
