@@ -1,8 +1,7 @@
 FROM ubuntu:20.04
 
 RUN apt-get update && \
-    apt-get install linux-headers-$(uname -r) \
-            musl-dev \
+    apt-get install musl-dev \
             gcc \
             git \
             g++ \
