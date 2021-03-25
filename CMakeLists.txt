@@ -50,8 +50,8 @@ add_subdirectory(ShamirScheme)
 add_subdirectory(testing)
 
 #tests
-#enable_testing()
-#add_test (test ${BUILD_DIR}/shamir_test)
+enable_testing()
+add_test (test ${BUILD_DIR}/shamir_test)
 
 #CPack
 set(CPACK_GENERATOR DEB)
