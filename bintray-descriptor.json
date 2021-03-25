@@ -1,25 +1,25 @@
 {
   "package": {
-    "name": "shamir",
-    "repo": "ShamirSecretSharing",
+    "name": "ShamirSecretSharing",
+    "repo": "Shamir",
     "subject": "avduckart",
-    "vcs_url": "https://github.com/avduckart/shamir.git"
+    "vcs_url": "https://github.com/avduckart/ShamirSecretSharing.git"
   },
   "version": {
     "name": "__VERSION__",
     "desc": "shamir __VERSION__"
   },
   "licenses": ["MIT"],
-//  "desc": "Debian package built and deployed completely automatically",
+  "desc": "Debian package built and deployed completely automatically",
   "files": [
     {
       "includePattern": "./(.[^/]*(\\.deb)$)",
       "uploadPattern": "$1"
-//      "matrixParams": {
-//        "deb_distribution": "xenial",
-//        "deb_component": "main",
-//        "deb_architecture": "amd64"
-//      }
+      "matrixParams": {
+        "deb_distribution": "xenial",
+        "deb_component": "main",
+        "deb_architecture": "amd64"
+      }
     }
   ],
   "publish": true,
