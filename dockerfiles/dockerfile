@@ -12,7 +12,7 @@ RUN apt-get update && \
             valgrind \
             perl \
             bash \
-            clang 
+            clang -y
     
 #Set working directory to mounted project directory
 RUN mkdir /project_dir
