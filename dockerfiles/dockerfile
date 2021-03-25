@@ -1,7 +1,7 @@
-FROM alpine:3.10.2
+FROM ubuntu:18.04
 
-RUN apk update && \
-    apk add linux-headers \
+RUN apt-get update && \
+    apt-get install linux-headers \
             musl-dev \
             build-base \
             gcc \
