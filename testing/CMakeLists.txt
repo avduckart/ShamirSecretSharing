@@ -46,4 +46,4 @@ target_include_directories(shamir_test PUBLIC
 	${OPENSSL_INCLUDE_DIR}
 	${GTEST_INCLUDE_DIR})
 
-install(TARGETS shamir_test RUNTIME DESTINATION bin)
+#install(TARGETS shamir_test RUNTIME DESTINATION bin)
