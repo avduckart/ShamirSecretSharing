@@ -20,5 +20,3 @@ deploy:
   file: bintray-descriptor.json
   user: $BINTRAY_USER
   key: $BINTRAY_API_KEY
-  on:
-      branch: master
