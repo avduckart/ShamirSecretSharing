@@ -16,3 +16,4 @@ target_link_libraries(${ProjectName}
 target_include_directories(${ProjectName} PUBLIC
     ${OPENSSL_INCLUDE_DIR})
 
+install(TARGETS ${ProjectName} RUNTIME DESTINATION bin)
