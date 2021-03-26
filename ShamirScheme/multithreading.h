@@ -5,7 +5,7 @@
 
 #if defined _WIN32 && defined _MSC_VER
     #include <windows.h>
-    #define create_thread(thread, func, data) thread = CreateThread(NULL, 0, func, data, 0, NULL)
+    #define create_thread(thread, func, data) *thread = CreateThread(NULL, 0, func, data, 0, NULL)
     #define join(threads) WaitForMultipleObjects(_K, threads, TRUE, INFINITE)
     #define thread_t HANDLE
     #define close_thread(thread) CloseHandle(thread)
