@@ -3,7 +3,7 @@
 #ifndef __TYPES_H__
 #define __TYPES_H__
 
-#include "../shamir_types.h"
+#include <shamir_types.h>
 
 typedef struct {
     part_t* parts;

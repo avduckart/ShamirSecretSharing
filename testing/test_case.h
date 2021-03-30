@@ -1,8 +1,8 @@
 #pragma once
 
-#include "gtest/gtest.h"
-#include "../shamir_scheme.h"
-#include "../errors.h"
+#include <gtest/gtest.h>
+#include <shamir_scheme.h>
+#include <errors.h>
 
 
 TEST(TestCase, etalon_value_test)

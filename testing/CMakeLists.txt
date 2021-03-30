@@ -43,6 +43,7 @@ target_link_libraries(shamir_test PRIVATE
 )
 
 target_include_directories(shamir_test PUBLIC 
+    ${PROJECT_INCLUDE_DIR} 
 	${OPENSSL_INCLUDE_DIR}
 	${GTEST_INCLUDE_DIR})
 

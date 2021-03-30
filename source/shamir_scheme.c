@@ -1,8 +1,9 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "../shamir_scheme.h"
-#include "../errors.h"
+#include <shamir_scheme.h>
+#include <errors.h>
+
 #include "multithreading.h"
 #include "types.h"
 

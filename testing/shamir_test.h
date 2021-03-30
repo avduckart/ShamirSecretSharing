@@ -1,7 +1,7 @@
 #pragma once
 
-#include "gtest/gtest.h"
-#include "../shamir_scheme.h"
+#include <gtest/gtest.h>
+#include <shamir_scheme.h>
 
 class ShamirTest : public ::testing::Test
 {   
