@@ -43,6 +43,8 @@ else()
 	set(OPENSSL_INCLUDE_DIR ${OPENSSL_ROOT}/include)
 endif()
 
+configure_file(version.h.in ${PROJECT_SOURCE_DIR}/version.h)
+
 add_subdirectory(source)
 add_subdirectory(testing)
 
