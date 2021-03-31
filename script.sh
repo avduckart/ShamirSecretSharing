@@ -11,4 +11,4 @@ valgrind --tool=helgrind build/Release/shamir_test
 rm -rf coverage
 mkdir coverage
 build/Release/shamir_test
-gcovr --filter source/ --print-summary --html-details -o coverage/index.html
+gcovr --filter source/ headers/ --print-summary --html-details -o coverage/index.html
