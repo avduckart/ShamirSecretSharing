@@ -2,10 +2,6 @@
 #include <stdio.h>
 
 #include <shamir_scheme.h>
-#include <errors.h>
-
-#include "multithreading.h"
-#include "types.h"
 
 #define secure_alloc(type, var, func)   type * var = func(); if(!var) { data->success = 0xF0; return;}
 #define secure_free(func, var)          if(var) func(var);
@@ -19,11 +15,11 @@ void calc_term(restore_data_t*);
 void run_calc(thread_t*, const share_data_t*);
 void zero_part(part_t*);
 void zero_parts(part_t*);
-int is_ready_to_write_parts(part_t*);
 void close_threads(thread_t*);
-int handler(int);
+result_t is_ready_to_write_parts(part_t*);
+result_t handler(int);
 
-int construct_polynom(polynom_t* pol, const BIGNUM* mod)
+result_t construct_polynom(polynom_t* pol, const BIGNUM* mod)
 {
     is_null(pol, OUTPUT_ADDRESS_IS_NULL);
     is_null(mod, MODULE_IS_NULL);
@@ -36,7 +32,7 @@ int construct_polynom(polynom_t* pol, const BIGNUM* mod)
     return SUCCESS;
 }
 
-int destruct_polynom(polynom_t* pol)
+result_t destruct_polynom(polynom_t* pol)
 {
     is_null(pol, OUTPUT_ADDRESS_IS_NULL);
 
@@ -46,7 +42,7 @@ int destruct_polynom(polynom_t* pol)
     return SUCCESS;
 }
 
-int share_secret(part_t* parts, const polynom_t* pol, const BIGNUM* mod)
+result_t share_secret(part_t* parts, const polynom_t* pol, const BIGNUM* mod)
 {
     is_null(pol, INPUT_ADDRESS_IS_NULL);
     is_null(mod, MODULE_IS_NULL);
@@ -70,7 +66,7 @@ int share_secret(part_t* parts, const polynom_t* pol, const BIGNUM* mod)
     return data.success|ret;
 }
 
-int restore_secret(BIGNUM* secret, const part_t* part1, const part_t* part2, const part_t* part3, const BIGNUM* mod)
+result_t restore_secret(BIGNUM* secret, const part_t* part1, const part_t* part2, const part_t* part3, const BIGNUM* mod)
 {
     is_null(secret, OUTPUT_ADDRESS_IS_NULL);
     is_null(mod, MODULE_IS_NULL);
@@ -81,7 +77,7 @@ int restore_secret(BIGNUM* secret, const part_t* part1, const part_t* part2, con
 
     mutex_t mtx;
     mutex_init(mtx);
-    int success = 0;
+    result_t success = 0;
     thread_t threads[_K];
     restore_data_t data[_K] = {
         {secret, {part1, part2, part3}, (BIGNUM*)mod, 0, &mtx},
@@ -207,9 +203,9 @@ void close_threads(thread_t* threads)
             close_thread(threads[i]);
 }
 
-int handler(int cause)
+result_t handler(int cause)
 {
-    int ret = SUCCESS;
+    result_t ret = SUCCESS;
     switch (cause) {
 #if defined _WIN32 && defined _MSC_VER
     case WAIT_ABANDONED_0:
@@ -236,7 +232,7 @@ int handler(int cause)
     return ret;
 }
 
-int is_ready_to_write_parts(part_t* parts)
+result_t is_ready_to_write_parts(part_t* parts)
 {
     for (int i = 1; i <= _N; i++)
         is_null(&parts[i - 1], OUTPUT_ADDRESS_IS_NULL);

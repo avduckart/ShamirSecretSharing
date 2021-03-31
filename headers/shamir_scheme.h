@@ -26,10 +26,10 @@
 extern "C" {
 #endif
     
-DLLEXPORT int construct_polynom(polynom_t*, const BIGNUM*);
-DLLEXPORT int destruct_polynom(polynom_t*);
-DLLEXPORT int share_secret(part_t*, const polynom_t*, const BIGNUM*);
-DLLEXPORT int restore_secret(BIGNUM*, const part_t*, const part_t*, const part_t*, const BIGNUM*);
+DLLEXPORT result_t construct_polynom(polynom_t*, const BIGNUM*);
+DLLEXPORT result_t destruct_polynom(polynom_t*);
+DLLEXPORT result_t share_secret(part_t*, const polynom_t*, const BIGNUM*);
+DLLEXPORT result_t restore_secret(BIGNUM*, const part_t*, const part_t*, const part_t*, const BIGNUM*);
 
 #ifdef __cplusplus
 }

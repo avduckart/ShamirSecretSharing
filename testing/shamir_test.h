@@ -3,6 +3,8 @@
 #include <gtest/gtest.h>
 #include <shamir_scheme.h>
 
+#include "macros.h"
+
 class ShamirTest : public ::testing::Test
 {   
 protected:
@@ -15,20 +17,19 @@ protected:
     {
         mod = BN_get0_nist_prime_256();
         construct_polynom(&pol, mod);
-        secret = BN_new();
-        for (int i = 0; i < _N; i++)
-        {
-            parts[i].shadow = BN_secure_new();
-            parts[i].id = BN_secure_new();
+        BN_secure_alloc(secret);
+        for (int i = 0; i < _N; i++) {
+            BN_secure_alloc(parts[i].shadow);
+            BN_secure_alloc(parts[i].id);
         }
     }
     void TearDown()
     {
         for (int i = 0; i < _N; i++) {
-            BN_clear_free(parts[i].shadow);
-            BN_clear_free(parts[i].id);
+            BN_secure_free(parts[i].shadow);
+            BN_secure_free(parts[i].id);
         }
-        BN_free(secret);
+        BN_secure_free(secret);
         destruct_polynom(&pol);
     }
 };

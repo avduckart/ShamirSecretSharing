@@ -2,15 +2,20 @@
 
 #include <gtest/gtest.h>
 #include <shamir_scheme.h>
-#include <errors.h>
 
+#include "macros.h"
 
 TEST(TestCase, etalon_value_test)
 {
-    BIGNUM* mod = BN_new(); BN_set_word(mod, 13);
-    BIGNUM* a0 = BN_new(); BN_set_word(a0, 11);
-    BIGNUM* a1 = BN_new(); BN_set_word(a1, 8);
-    BIGNUM* a2 = BN_new(); BN_set_word(a2, 7);
+    BIGNUM* mod;
+    BIGNUM* a0;
+    BIGNUM* a1;
+    BIGNUM* a2;
+
+    BN_secure_assign(mod, 13);
+    BN_secure_assign(a0, 11);
+    BN_secure_assign(a1, 8);
+    BN_secure_assign(a2, 7);
     polynom_t pol = { a0, a1, a2 };
 
     BIGNUM* e_id[_N];
@@ -27,11 +32,11 @@ TEST(TestCase, etalon_value_test)
         parts[i].id = BN_secure_new();
     }
 
-    BN_set_word(e_sh[0], 0);
-    BN_set_word(e_sh[1], 3);
-    BN_set_word(e_sh[2], 7);
-    BN_set_word(e_sh[3], 12);
-    BN_set_word(e_sh[4], 5);
+    BN_secure_assign(e_sh[0], 0);
+    BN_secure_assign(e_sh[1], 3);
+    BN_secure_assign(e_sh[2], 7);
+    BN_secure_assign(e_sh[3], 12);
+    BN_secure_assign(e_sh[4], 5);
 
     part_t e_parts[] = {
         {e_sh[0], e_id[0]},
@@ -49,7 +54,8 @@ TEST(TestCase, etalon_value_test)
     }
 
     int ret;
-    BIGNUM* secret = BN_secure_new();
+    BIGNUM* secret;
+    BN_secure_alloc(secret);
     for (int i = 0; i < _N; i++) {
         for (int j = 0; j < _N; j++) {
             for (int l = 0; l < _N; l++)
@@ -63,21 +69,21 @@ TEST(TestCase, etalon_value_test)
         }
     }
 
-    BN_free(secret);
+    BN_secure_free(secret);
 
     for (int i = 0; i < _N; i++)
     {
-        BN_free(parts[i].shadow);
-        BN_free(parts[i].id);
+        BN_secure_free(parts[i].shadow);
+        BN_secure_free(parts[i].id);
 
-        BN_free(e_id[i]);
-        BN_free(e_sh[i]);
+        BN_secure_free(e_id[i]);
+        BN_secure_free(e_sh[i]);
     }
 
-    BN_free(a0);
-    BN_free(a1);
-    BN_free(a2);
-    BN_free(mod);
+    BN_secure_free(a0);
+    BN_secure_free(a1);
+    BN_secure_free(a2);
+    BN_secure_free(mod);
 };
 
 TEST(TestCase, construct_polynom_test) {
