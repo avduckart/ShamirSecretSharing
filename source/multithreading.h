@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __THREADING_H__
-#define __THREADING_H__
+#ifndef __MULTITHREADING_H__
+#define __MULTITHREADING_H__
 
 #if defined _WIN32 && defined _MSC_VER
     #include <windows.h>
@@ -42,5 +42,5 @@
 
 #define syncronized(mutex, body) mutex_lock(mutex); body; mutex_unlock(mutex)
 
-#endif //__THREADING_H__
+#endif //__MULTITHREADING_H__
  
