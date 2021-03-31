@@ -50,4 +50,4 @@ add_subdirectory(testing)
 
 
 enable_testing()
-add_test (test shamir_test)
+add_test (test ${BUILD_DIR}/shamir_test)
