@@ -3,6 +3,10 @@
 #ifndef __MULTITHREADING_H__
 #define __MULTITHREADING_H__
 
+
+#define _K 3
+#define _N 5
+
 #if defined _WIN32 && defined _MSC_VER
     #include <windows.h>
     #define create_thread(thread, func, data) *thread = CreateThread(NULL, 0, func, data, 0, NULL)
