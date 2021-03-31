@@ -7,9 +7,6 @@
 
 #include "multithreading.h"
 
-#define _K 3
-#define _N 5
-
 typedef struct
 {
     BIGNUM* coeffs[_K];
