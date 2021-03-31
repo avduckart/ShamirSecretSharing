@@ -48,7 +48,3 @@ configure_file(version.h.in ${PROJECT_SOURCE_DIR}/version.h)
 add_subdirectory(source)
 add_subdirectory(testing)
 
-#tests
-enable_testing()
-add_test (test ${BUILD_DIR}/shamir_test)
-
