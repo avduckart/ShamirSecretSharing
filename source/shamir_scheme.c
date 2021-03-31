@@ -19,6 +19,8 @@ void close_threads(thread_t*);
 result_t is_ready_to_write_parts(part_t*);
 result_t handler(int);
 
+void(*calc[])(share_data_t*) = { calc_a0, calc_a1, calc_a2 };
+
 result_t construct_polynom(polynom_t* pol, const BIGNUM* mod)
 {
     is_null(pol, OUTPUT_ADDRESS_IS_NULL);
@@ -256,8 +258,6 @@ void zero_parts(part_t* parts)
 
 void run_calc(thread_t* threads, const share_data_t* data)
 {
-    void(*calc[])(share_data_t*) = { calc_a0, calc_a1, calc_a2 };
-
     for (int i = 0; i < _K; i++)
             create_thread(&threads[i], (void* (*)(void*)) calc[i], (share_data_t*)data);
 }
