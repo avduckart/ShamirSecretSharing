@@ -1,8 +1,8 @@
-os: linux             # ОС
-sudo: required        # Необходимость прав sudo
-language: "minimal"   # Языковой шаблон
+os: linux 
+sudo: required 
+language: "minimal"
 services:
-  - docker            # Необходимые сервисы
+  - docker 
 
 jobs:
   include: 
@@ -11,12 +11,3 @@ jobs:
       - docker run --name=container -v ${PWD}:/project_dir image bash ./script.sh
       - docker rm -fv container
 
-before_deploy:
-  - sed -i "s/__VERSION__/$TRAVIS_BUILD_NUMBER/g" bintray-descriptor.json
-
-deploy:
-  skip_cleanup: true
-  provider: bintray
-  file: bintray-descriptor.json
-  user: $BINTRAY_USER
-  key: $BINTRAY_API_KEY
