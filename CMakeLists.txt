@@ -47,7 +47,3 @@ endif()
 
 add_subdirectory(source)
 add_subdirectory(testing)
-
-
-enable_testing()
-add_test (test build/Release/shamir_test)
