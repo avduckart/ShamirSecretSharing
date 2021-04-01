@@ -26,7 +26,7 @@ result_t construct_polynom(polynom_t* pol, const BIGNUM* mod)
     is_null(pol, OUTPUT_ADDRESS_IS_NULL);
     is_null(mod, MODULE_IS_NULL);
 
-    for (int i = 0; i < _K; i++) {
+    for (size_t i = 0; i < _K; i++) {
         pol->coeffs[i] = BN_secure_new();
         BN_rand_range(pol->coeffs[i], mod);
     }
@@ -38,7 +38,7 @@ result_t destruct_polynom(polynom_t* pol)
 {
     is_null(pol, OUTPUT_ADDRESS_IS_NULL);
 
-    for (int i = 0; i < _K; i++) 
+    for (size_t i = 0; i < _K; i++) 
         BN_clear_free(pol->coeffs[i]);
 
     return SUCCESS;
@@ -49,7 +49,7 @@ result_t share_secret(part_t* parts, const polynom_t* pol, const BIGNUM* mod)
     is_null(pol, INPUT_ADDRESS_IS_NULL);
     is_null(mod, MODULE_IS_NULL);
 
-    int ready = is_ready_to_write_parts(parts);
+    int ready = ready_to_write_parts(parts);
     check(ready, ready);
 
     zero_parts(parts);
@@ -87,7 +87,7 @@ result_t restore_secret(BIGNUM* secret, const part_t* part1, const part_t* part2
         {secret, {part3, part2, part1}, (BIGNUM*)mod, 0, &mtx}
     };
 
-    for (int i = 0; i < _K; i++) {
+    for (size_t i = 0; i < _K; i++) {
         create_thread(&threads[i], (void* (*)(void*)) calc_term, &data[i]);
         success |= data[i].success;
     }
@@ -137,7 +137,7 @@ void calc_a0(share_data_t* data)
 
     secure_alloc(BN_CTX, ctx, BN_CTX_new);
 
-    for(int i = 1; i <= _N; i++) {
+    for(size_t i = 1; i <= _N; i++) {
         BN_set_word(data->parts[i - 1].id, i);
         syncronized(data->mtx,
             BN_mod_add(data->parts[i-1].shadow, data->parts[i-1].shadow, data->pol->coeffs[0], data->mod, ctx)
@@ -156,7 +156,7 @@ void calc_a1(share_data_t* data)
     secure_alloc(BN_CTX, ctx, BN_CTX_new);
 
     BN_zero(term);
-    for(int i = 1; i <= _N; i++) {
+    for(size_t i = 1; i <= _N; i++) {
         BN_mod_add(term, term, data->pol->coeffs[1], data->mod, ctx);
         syncronized(data->mtx,
             BN_mod_add(data->parts[i - 1].shadow, data->parts[i - 1].shadow, term, data->mod, ctx)
@@ -181,7 +181,7 @@ void calc_a2(share_data_t* data)
     BN_mod_add(dd, data->pol->coeffs[2], data->pol->coeffs[2], data->mod, ctx);
 
     BN_zero(term);
-    for(int i = 1; i <= _N; i++) {
+    for(size_t i = 1; i <= _N; i++) {
         BN_mod_add(term, term, d, data->mod, ctx);
         syncronized(data->mtx,
             BN_mod_add(data->parts[i - 1].shadow, data->parts[i - 1].shadow, term, data->mod, ctx)
@@ -201,8 +201,8 @@ void close_threads(thread_t* threads)
 {
     assert(threads);
 
-    for(int i=0; i < _K; i++)
-            close_thread(threads[i]);
+    for(size_t i=0; i < _K; i++)
+        close_thread(threads[i]);
 }
 
 result_t handler(int cause)
@@ -234,9 +234,9 @@ result_t handler(int cause)
     return ret;
 }
 
-result_t is_ready_to_write_parts(part_t* parts)
+result_t ready_to_write_parts(part_t* parts)
 {
-    for (int i = 1; i <= _N; i++)
+    for (size_t i = 1; i <= _N; i++)
         is_null(&parts[i - 1], OUTPUT_ADDRESS_IS_NULL);
 
     return SUCCESS;
@@ -252,12 +252,12 @@ void zero_part(part_t* part)
 
 void zero_parts(part_t* parts)
 {
-    for (int i = 1; i <= _N; i++)
+    for (size_t i = 1; i <= _N; i++)
         zero_part(&parts[i - 1]);
 }
 
 void run_calc(thread_t* threads, const share_data_t* data)
 {
-    for (int i = 0; i < _K; i++)
-            create_thread(&threads[i], (void* (*)(void*)) calc[i], (share_data_t*)data);
+    for (size_t i = 0; i < _K; i++)
+        create_thread(&threads[i], (void* (*)(void*)) calc[i], (share_data_t*)data);
 }
