@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
-add_library(${ProjectName} SHARED shamir_scheme.c) 
+add_library(${ProjectName} SHARED 
+  shamir_scheme.c 
+  calc.c) 
 
 set_target_properties(${ProjectName}
   PROPERTIES
