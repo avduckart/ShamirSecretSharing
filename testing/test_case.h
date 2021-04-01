@@ -47,8 +47,7 @@ TEST(TestCase, etalon_value_test)
 
     ASSERT_EQ(SUCCESS, share_secret(parts, &pol, mod));
 
-    for (int i = 0; i < _N; i++)
-    {
+    for (size_t i = 0; i < _N; i++) {
         ASSERT_EQ(0, BN_cmp(e_parts[i].id, parts[i].id));
         ASSERT_EQ(0, BN_cmp(e_parts[i].shadow, parts[i].shadow));
     }
@@ -56,10 +55,9 @@ TEST(TestCase, etalon_value_test)
     int ret;
     BIGNUM* secret;
     BN_secure_alloc(secret);
-    for (int i = 0; i < _N; i++) {
-        for (int j = 0; j < _N; j++) {
-            for (int l = 0; l < _N; l++)
-            {
+    for (size_t i = 0; i < _N; i++) {
+        for (size_t j = 0; j < _N; j++) {
+            for (size_t l = 0; l < _N; l++) {
                 ret = restore_secret(secret, &parts[i], &parts[j], &parts[l], mod);
                 if (i == j || i == l || j == l)
                     ASSERT_EQ(ANY_PARTS_ARE_SAME, ret);
@@ -71,7 +69,7 @@ TEST(TestCase, etalon_value_test)
 
     BN_secure_free(secret);
 
-    for (int i = 0; i < _N; i++)
+    for (size_t i = 0; i < _N; i++)
     {
         BN_secure_free(parts[i].shadow);
         BN_secure_free(parts[i].id);
