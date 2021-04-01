@@ -16,7 +16,7 @@ void run_calc(thread_t*, const share_data_t*);
 void zero_part(part_t*);
 void zero_parts(part_t*);
 void close_threads(thread_t*);
-result_t is_ready_to_write_parts(part_t*);
+result_t ready_to_write_parts(part_t*);
 result_t handler(int);
 
 void(*calc[])(share_data_t*) = { calc_a0, calc_a1, calc_a2 };
