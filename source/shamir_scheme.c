@@ -3,7 +3,7 @@
 
 #include <shamir_scheme.h>
 
-#define "calc.h"
+#include "calc.h"
 
 result_t construct_polynom(polynom_t* pol, const BIGNUM* mod)
 {
