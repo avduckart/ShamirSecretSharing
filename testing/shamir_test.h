@@ -18,14 +18,14 @@ protected:
         mod = BN_get0_nist_prime_256();
         construct_polynom(&pol, mod);
         BN_secure_alloc(secret);
-        for (int i = 0; i < _N; i++) {
+        for (size_t i = 0; i < _N; i++) {
             BN_secure_alloc(parts[i].shadow);
             BN_secure_alloc(parts[i].id);
         }
     }
     void TearDown()
     {
-        for (int i = 0; i < _N; i++) {
+        for (size_t i = 0; i < _N; i++) {
             BN_secure_free(parts[i].shadow);
             BN_secure_free(parts[i].id);
         }
@@ -61,10 +61,10 @@ TEST_F(ShamirTest, share_restore_test) {
     
     share_secret(parts, &pol, mod);
 
-    int ret;
-    for (int i = 0; i < _N; i++) {
-        for (int j = 0; j < _N; j++) {
-            for (int l = 0; l < _N; l++)
+    size_t ret;
+    for (size_t i = 0; i < _N; i++) {
+        for (size_t j = 0; j < _N; j++) {
+            for (size_t l = 0; l < _N; l++)
             {
                 ret = restore_secret(secret, &parts[i], &parts[j], &parts[l], mod);
                 if (i == j || i == l || j == l)
