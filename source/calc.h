@@ -29,27 +29,44 @@ void calc_term(restore_data_t* data)
     assert(data);
 
     secure_alloc(BN_CTX, ctx, BN_CTX_new);
+    secure_alloc(BN_MONT_CTX, mont, BN_MONT_CTX_new);
+    BN_MONT_CTX_set(mont, data->mod, ctx);
+
+    secure_alloc(BIGNUM, id0, BN_secure_new);
+    secure_alloc(BIGNUM, id1, BN_secure_new);
+    secure_alloc(BIGNUM, id2, BN_secure_new);
+    secure_alloc(BIGNUM, sh0, BN_secure_new);
     secure_alloc(BIGNUM, num, BN_secure_new);
-    BN_mod_mul(num, data->part[1]->id, data->part[2]->id, data->mod, ctx);
 
-    secure_alloc(BIGNUM, term, BN_secure_new);
-    secure_alloc(BIGNUM, denom, BN_secure_new);
-    BN_mod_sub(denom, data->part[0]->id, data->part[1]->id, data->mod, ctx);
-    BN_mod_sub(term, data->part[0]->id, data->part[2]->id, data->mod, ctx);
-    BN_mod_mul(denom, denom, term, data->mod, ctx);
+    BN_to_montgomery(id0, data->part[0]->id, mont, ctx);
+    BN_to_montgomery(id1, data->part[1]->id, mont, ctx);
+    BN_to_montgomery(id2, data->part[2]->id, mont, ctx);
+    BN_to_montgomery(sh0, data->part[0]->shadow, mont, ctx);
 
-    BN_mod_inverse(term, denom, data->mod, ctx);
-    secure_free(BN_clear_free, denom);
+    BN_mod_mul_montgomery(num, id1, id2, mont, ctx);
 
-    BN_mod_mul(term, term, num, data->mod, ctx);
-    secure_free(BN_clear_free, num);
-     
-    BN_mod_mul(term, term, data->part[0]->shadow, data->mod, ctx);
+    BN_mod_sub(id1, id0, id1, data->mod, ctx);
+    BN_mod_sub(id0, id0, id2, data->mod, ctx);
+    BN_mod_mul_montgomery(id1, id1, id0, mont, ctx);
+
+    BN_mod_inverse(id1, id1, data->mod, ctx);
+    BN_to_montgomery(id1, id1, mont, ctx);
+    BN_to_montgomery(id1, id1, mont, ctx);
+
+    BN_mod_mul_montgomery(id1, id1, num, mont, ctx);
+
+    BN_mod_mul_montgomery(id1, id1, sh0, mont, ctx);
+    BN_from_montgomery(id1, id1, mont, ctx);
 
     syncronized(*data->mtx,
-        BN_mod_add(data->secret, data->secret, term, data->mod, ctx));
+        BN_mod_add(data->secret, data->secret, id1, data->mod, ctx));
 
-    secure_free(BN_clear_free, term);
+    secure_free(BN_clear_free, num);
+    secure_free(BN_clear_free, sh0);
+    secure_free(BN_clear_free, id0);
+    secure_free(BN_clear_free, id1);
+    secure_free(BN_clear_free, id2);
+    secure_free(BN_MONT_CTX_free, mont);
     secure_free(BN_CTX_free, ctx);
 }
 
