@@ -4,8 +4,10 @@
 #define __SHAMIR_TYPES_H__
 
 #include <openssl/bn.h>
+#include <openssl/err.h>
 
-#include "multithreading.h"
+#define _K 3
+#define _N 5
 
 typedef struct
 {
@@ -17,26 +19,9 @@ typedef struct {
     BIGNUM* id;
 }part_t;
 
-typedef struct {
-    part_t* parts;
-    const polynom_t* pol;
-    BIGNUM* mod;
-    int success;
-    mutex_t mtx;
-
-}share_data_t;
-
-
-typedef struct {
-    BIGNUM* secret;
-    const part_t* part[_K];
-    BIGNUM* mod;
-    int success;
-    mutex_t* mtx;
-}restore_data_t;
-
-typedef enum reults {
+typedef enum results {
     SUCCESS,
+    OUT_OF_MEMORY,
     SOME_PART_IS_NULL,
     MODULE_IS_NULL,
     OUTPUT_ADDRESS_IS_NULL,
