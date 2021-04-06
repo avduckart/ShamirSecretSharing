@@ -9,7 +9,7 @@
 #define MONT_CTX_secure_alloc(var)          secure_alloc(BN_MONT_CTX, var, BN_MONT_CTX_new)
 #define handler(func)                       if(!func) { ret = ERR_get_error(); goto err;}
 #define BN_secure_mont_assign(var, val)     secure_alloc(BIGNUM, var, BN_secure_new); handler(BN_to_montgomery(var, val, mont, ctx))
-#define secure_free(func, var)              if(var) {func(var); var = NULL};
+#define secure_free(func, var)              if(var) {func(var); var = NULL;}
 #define MONT_CTX_secure_free(var)           secure_free(BN_MONT_CTX_free, var);
 
 
