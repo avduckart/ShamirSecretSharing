@@ -11,7 +11,7 @@
 #define secure_alloc(type, var, func)   type * var = func(); if(!var) { data->success = 0xF0; goto err;}
 #define BN_secure_alloc(var)            secure_alloc(BIGNUM, var, BN_secure_new)
 #define CTX_secure_alloc(var)           secure_alloc(BN_CTX, var, BN_CTX_new)
-#define secure_free(func, var)          if(var) func(var);
+#define secure_free(func, var)          if(var) {func(var); var = NULL;}
 #define BN_secure_free(var)             secure_free(BN_clear_free, var);
 #define CTX_secure_free(var)            secure_free(BN_CTX_free, var);
 #define handler(func)                   if(!func) { data->success = ERR_get_error(); goto err;}
