@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef __SHAMIR_SCHEME_H__
 #define __SHAMIR_SCHEME_H__
 

@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef __MULTITHREADING_H__
 #define __MULTITHREADING_H__
 

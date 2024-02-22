@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef __SHAMIR_TYPES_H__
 #define __SHAMIR_TYPES_H__
 
