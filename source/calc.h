@@ -38,21 +38,21 @@ typedef struct {
     mutex_t* mtx;
 }restore_data_t;
 
-void calc_a0(share_data_t*);
-void calc_a1(share_data_t*);
-void calc_a2(share_data_t*);
-void calc_free_term(restore_data_t *data);
-void run_calc(thread_t*, const share_data_t*);
-void zero_part(part_t*);
-void zero_parts(part_t*);
-void close_threads(thread_t*);
-result_t ready_to_write_parts(part_t*);
-result_t thread_handler(int);
+static void calc_a0(share_data_t*);
+static void calc_a1(share_data_t*);
+static void calc_a2(share_data_t*);
+static void calc_free_term(restore_data_t *data);
+static void run_calc(thread_t*, const share_data_t*);
+static void zero_part(part_t*);
+static void zero_parts(part_t*);
+static void close_threads(thread_t*);
+static result_t ready_to_write_parts(part_t*);
+static result_t thread_handler(int);
 
 void(*calc[])(share_data_t*) = { calc_a0, calc_a1, calc_a2 };
 
 // П(x - xj)/(xi - xj)
-void calc_free_term(restore_data_t* data)
+static void calc_free_term(restore_data_t* data)
 {
     assert(data);
 
@@ -91,7 +91,7 @@ void calc_free_term(restore_data_t* data)
 }
 
 // F(1) = a0, ..., F(5) = a0
-void calc_a0(share_data_t* data)
+static void calc_a0(share_data_t* data)
 {
     assert(data);
 
@@ -109,7 +109,7 @@ void calc_a0(share_data_t* data)
 }
 
 // F(1) += 1*a1, ..., F(5) += 5*a1
-void calc_a1(share_data_t* data)
+static void calc_a1(share_data_t* data)
 {
     assert(data);
 
@@ -130,7 +130,7 @@ void calc_a1(share_data_t* data)
 }
 
 // F(1) += a2, ..., F(5) += 25*a2
-void calc_a2(share_data_t* data)
+static void calc_a2(share_data_t* data)
 {
     assert(data);
 
@@ -160,7 +160,7 @@ void calc_a2(share_data_t* data)
 }
 
 
-void close_threads(thread_t* threads)
+static void close_threads(thread_t* threads)
 {
     assert(threads);
 
@@ -168,7 +168,7 @@ void close_threads(thread_t* threads)
         close_thread(threads[i]);
 }
 
-result_t thread_handler(int cause)
+static result_t thread_handler(int cause)
 {
     result_t ret = SUCCESS;
     switch (cause) {
@@ -197,7 +197,7 @@ result_t thread_handler(int cause)
     return ret;
 }
 
-result_t ready_to_write_parts(part_t* parts)
+static result_t ready_to_write_parts(part_t* parts)
 {
     for (size_t i = 1; i <= _N; i++)
         is_null(&parts[i - 1], OUTPUT_ADDRESS_IS_NULL);
@@ -205,7 +205,7 @@ result_t ready_to_write_parts(part_t* parts)
     return SUCCESS;
 }
 
-void zero_part(part_t* part)
+static void zero_part(part_t* part)
 {
     assert(part);
 
@@ -213,13 +213,13 @@ void zero_part(part_t* part)
     BN_zero(part->shadow);
 }
 
-void zero_parts(part_t* parts)
+static void zero_parts(part_t* parts)
 {
     for (size_t i = 1; i <= _N; i++)
         zero_part(&parts[i - 1]);
 }
 
-void run_calc(thread_t* threads, const share_data_t* data)
+static void run_calc(thread_t* threads, const share_data_t* data)
 {
     for (size_t i = 0; i < _K; i++)
         create_thread(&threads[i], (void* (*)(void*)) calc[i], (share_data_t*)data);
